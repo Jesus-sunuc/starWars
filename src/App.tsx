@@ -21,7 +21,7 @@ function App() {
                     <Link to="/people"><span className='title1'>People</span></Link> <span className='title1'>|</span><Link to="/ships"><span className='title2'>Ship</span></Link>
                   </ul>
                 </nav>
-                <div className='borderColor'>
+                <div>
                   <Routes>
                       <Route path="/people" element={<PeopleList />} />
                       <Route path="/people/:personId" element={<PeopleDetails />} />
