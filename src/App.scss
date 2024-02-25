@@ -1,0 +1,169 @@
+@font-face {
+  font-family: 'Orbitron';
+  src: url('/src/fonts/orbitron.ttf');
+}
+
+body {
+  height: 100vh;
+  color: #F1FADA;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Orbitron';
+  background-color: #000;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    background: transparent url('../src/img/cover.jpg') no-repeat center center/cover;
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+strong,
+p {
+  color: #00d66b;
+
+  strong {
+    font-size: 16px;
+    color: #F1FADA;
+  }
+
+  @media screen and (min-width: 576px) {
+    strong {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+  }
+}
+
+.title1,
+.title2 {
+  font-size: 26px;
+  text-decoration: underline;
+  color: #00d66b;
+}
+
+.title1 {
+  padding-right: 10px;
+}
+
+.title2 {
+  padding-left: 10px;
+}
+
+.space {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin-bottom: 30px;
+  text-align: center;
+  color: #F1FADA;
+}
+
+.centered,
+.centered2 {
+  a {
+    text-decoration: none;
+    color: #F1FADA;
+    font-size: 20px;
+
+    &:hover {
+      color: #00d66b;
+    }
+  }
+
+  li {
+    list-style: none;
+    padding: 5px;
+    border: 1px transparent solid;
+
+    &:hover {
+      border: 1px solid #00d66b;
+      border-radius: 5px;
+      color: #00d66b;
+    }
+  }
+
+  &.centered2 {
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 170px;
+
+    @media screen and (min-width: 576px) {
+      flex-direction: row;
+      justify-content: start;
+    }
+  }
+
+  &.centered {
+    flex-direction: column;
+    justify-content: center;
+
+    @media screen and (min-width: 576px) {
+      flex-direction: row;
+      justify-content: start;
+    }
+  }
+}
+
+nav {
+  ul {
+    font-size: 20px;
+    padding-left: 0;
+  }
+
+  &.navbar-expand-lg.bg- {
+    background-color: #000;
+  }
+}
+
+.form-control {
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #F1FADA;
+  background-color: #eef1e7;
+  border: 1px solid #00d66b;
+
+  &:focus {
+    color: #000;
+  }
+
+  &::placeholder {
+    color: #aebbae;
+  }
+
+  @media screen and (min-width: 792px) {
+    width: 60%;
+  }
+}
+
+.paddingLeft {
+  margin-top: 20px;
+  padding-left: 20px;
+  text-align: center;
+
+  @media screen and (min-width: 576px) {
+    text-align: left;
+  }
+}
+
+.container-fluid {
+  min-width: 100%;
+}
+
+@media screen and (min-width: 576px) {
+  h1 {
+    font-size: 60px;
+  }
+}

@@ -1,101 +1,22 @@
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-// import { useShipDetails } from '../hooks/swapiHooks';
-
-
-interface PersonDetails {
-  name: string;
-  birth_year: string;
-  eye_color: string;
-  gender: string;
-  hair_color: string;
-  height: string;
-  mass: string;
-  skin_color: string;
-  homeworld: string;
-  films: string[];
-  species: string[];
-  starships: string[];
-  vehicles: string[];
-  url: string;
-  created: string;
-  edited: string;
-}
+import { usePersonDetails, useFetchByUrl, useFetchMultipleUrls } from '../hooks/swapiHooks.ts';
 
 function PersonDetails() {
-  const { personId } = useParams<{ personId: string }>();
-  const [personDetails, setPersonDetails] = useState<PersonDetails | null>(null);
-  const [homeworldName, setHomeworldName] = useState<string | null>(null);
-  const [speciesNames, setSpeciesNames] = useState<string[]>([]);
-  const [filmTitles, setFilmTitles] = useState<string[]>([]);
-  const [starshipNames, setStarShipNames] = useState<string[]>([]);
-  const [vehiclesNames, setVehiclesNames] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const { personId } = useParams<{ personId?: string }>();
+  const { data: personDetails, isLoading, isError, error } = usePersonDetails(personId!);
+  const { data: homeworld } = useFetchByUrl(personDetails?.homeworld || '');
+  // Fetch multiple details using URLs from personDetails
+  const films = useFetchMultipleUrls(personDetails?.films || []);
+  const species = useFetchMultipleUrls(personDetails?.species || []);
+  const starships = useFetchMultipleUrls(personDetails?.starships || []);
+  const vehicles = useFetchMultipleUrls(personDetails?.vehicles || []);
 
-  useEffect(() => {
-    const fetchPersonDetails = async () => {
-      try {
-
-        const response = await axios.get<PersonDetails>(`https://swapi.dev/api/people/${personId}/`);
-        setPersonDetails(response.data);
-
-        const homeworldResponse = await axios.get(response.data.homeworld);
-        setHomeworldName(homeworldResponse.data.name);
-
-        if (response.data.species.length > 0) {
-          const speciesResponses = await Promise.all(
-            response.data.species.map(speciesUrl => axios.get(speciesUrl))
-          );
-          const speciesNames = speciesResponses.map(res => res.data.name);
-          setSpeciesNames(speciesNames);
-        }
-
-        if (response.data.films.length > 0) {
-          const filmResponses = await Promise.all(
-            response.data.films.map(filmUrl => axios.get(filmUrl))
-          );
-          const filmTitles = filmResponses.map(res => res.data.title);
-          setFilmTitles(filmTitles);
-        }
-
-        if (response.data.starships.length > 0) {
-          const starshipResponses = await Promise.all(
-            response.data.starships.map(starshipUrl => axios.get(starshipUrl))
-          );
-          const starshipNames = starshipResponses.map(res => res.data.name);
-          setStarShipNames(starshipNames);
-        }
-
-        if (response.data.vehicles.length > 0) {
-          const vehiclesResponses = await Promise.all(
-            response.data.vehicles.map(vehiclesUrl => axios.get(vehiclesUrl))
-          );
-          const vehiclesNames = vehiclesResponses.map(res => res.data.name);
-          setVehiclesNames(vehiclesNames);
-        }
-
-      } catch (err) {
-        console.error(err);
-        setError('Person not found.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (personId) {
-      fetchPersonDetails();
-    }
-  }, [personId]);
-
-  if (loading) return <div className="text-center">
+  if (isLoading) return <div className="text-center">
     <div className="spinner-border" role="status">
       <span className="visually-hidden">Loading...</span>
     </div>
-  </div>
-
-  if (error) return <div>Error: {error}</div>;
+  </div>;
+  if (isError) return <div>Error: {error instanceof Error ? error.message : 'An error occurred'}</div>;
   if (!personDetails) return <div>Person not found.</div>;
 
   return (
@@ -103,47 +24,47 @@ function PersonDetails() {
       <h2 className='space'>Person Details</h2>
       <div className='row'>
         <div className='col-12 col-md-6'>
-          <p><strong>Name:</strong> {personDetails.name}</p>
-          <p><strong>Birthday:</strong> {personDetails.birth_year}</p>
-          <p><strong>Eye Color:</strong> {personDetails.eye_color}</p>
-          <p><strong>Gender:</strong> {personDetails.gender}</p>
-          <p><strong>Hair Color:</strong> {personDetails.hair_color}</p>
-          <p><strong>Height:</strong> {personDetails.height}</p>
-          <p><strong>Mass:</strong> {personDetails.mass}</p>
-          <p><strong>Skin Color:</strong> {personDetails.skin_color}</p>
-          <p><strong>Homeworld:</strong> {homeworldName}</p>
+          <p><strong>Name:</strong> {personDetails.name || 'None'}</p>
+          <p><strong>Birthday:</strong> {personDetails.birth_year || 'None'}</p>
+          <p><strong>Eye Color:</strong> {personDetails.eye_color || 'None'}</p>
+          <p><strong>Gender:</strong> {personDetails.gender || 'None'}</p>
+          <p><strong>Hair Color:</strong> {personDetails.hair_color || 'None'}</p>
+          <p><strong>Height:</strong> {personDetails.height || 'None'}</p>
+          <p><strong>Mass:</strong> {personDetails.mass || 'None'}</p>
+          <p><strong>Skin Color:</strong> {personDetails.skin_color || 'None'}</p>
+          <p><strong>Homeworld:</strong> {homeworld?.name || 'None'}</p>
+          <p><strong>Films:</strong>
+            {films.data && films.data.length > 0 ? (
+              films.data.map((film, index) => <p key={index}>{film.title}</p>)
+            ) : (
+              <p>None</p>
+            )}</p>
         </div>
-        <div className='col-12 col-md-6'>
-          {speciesNames.length > 0 ? (
-            <p><strong>Species:</strong> {speciesNames.join(', ')}</p>
-          ) : (
-            <p><strong>Species:</strong> Unknown</p>
-          )}
-          <strong>Films:</strong>
-          {filmTitles.length > 0 ? (
-            filmTitles.map((title, index) => <p key={index}>{title}</p>)
-          ) : (
-            <p>None</p>
-          )}
-          <strong>Starships:</strong>
-          {starshipNames.length > 0 ? (
-            starshipNames.map((name, index) => <p key={index}>{name}</p>)
-          ) : (
-            <p>None</p>
-          )}
-          <strong>Vehicles:</strong>
-          {vehiclesNames.length > 0 ? (
-            vehiclesNames.map((name, index) => <p key={index}>{name}</p>)
-          ) : (
-            <p>None</p>
-          )}
-          <p><strong>URL:</strong> {personDetails.url}</p>
-          <p><strong>Created:</strong> {personDetails.created}</p>
-          <p><strong>Edited:</strong> {personDetails.edited}</p>
+        <div className="col-12 col-md-6">
+          <p> <strong>Species:</strong>
+            {species?.data && species.data.length > 0 ? (
+              species?.data.map((specie, index) => <p key={index}>{specie.name}</p>)
+            ) : (
+              <p>None</p>
+            )}</p>
+          <p> <strong>Starships:</strong>
+            {starships?.data && starships.data.length > 0 ? (
+              starships?.data.map((starship, index) => <p key={index}>{starship.name}</p>)
+            ) : (
+              <p>None</p>
+            )}</p>
+          <p><strong>Vehicles:</strong>
+            {vehicles?.data && vehicles.data.length > 0 ? (
+              vehicles?.data.map((vehicle, index) => <p key={index}>{vehicle.name}</p>)
+            ) : (
+              <p>None</p>
+            )}</p>
+          <p><strong>URL:</strong> {personDetails.url || 'None'}</p>
+          <p><strong>Created:</strong> {personDetails.created || 'None'}</p>
+          <p><strong>Edited:</strong> {personDetails.edited || 'None'}</p>
         </div>
       </div>
     </div>
   );
 }
-
 export default PersonDetails;
