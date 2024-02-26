@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { usePeople } from '../hooks/swapiHooks';
+import { usePeople } from '../hooks/pagesHooks.ts';
 
 const extractIdFromUrl = (url: string): string | null => {
   const idPattern = /\/(\d+)\/$/; // Regex to match the ID at the end of the URL

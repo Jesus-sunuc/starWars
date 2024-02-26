@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom';
-import { usePersonDetails, useFetchByUrl, useFetchMultipleUrls } from '../hooks/swapiHooks.ts';
+import { useFetchMultipleUrls } from '../hooks/multipleUrlsHooks.ts';
+import { useFetchByUrl } from '../hooks/databyUrlHooks.ts';
+import { usePersonDetails } from '../hooks/personHooks.ts';
 
 function PersonDetails() {
   const { personId } = useParams<{ personId?: string }>();
   const { data: personDetails, isLoading, isError, error } = usePersonDetails(personId!);
   const { data: homeworld } = useFetchByUrl(personDetails?.homeworld || '');
-  // Fetch multiple details using URLs from personDetails
   const films = useFetchMultipleUrls(personDetails?.films || []);
   const species = useFetchMultipleUrls(personDetails?.species || []);
   const starships = useFetchMultipleUrls(personDetails?.starships || []);

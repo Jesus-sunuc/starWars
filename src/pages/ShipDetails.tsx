@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { useShipDetails, useFetchByUrl, useFetchMultipleUrls } from '../hooks/swapiHooks';
-
+import { useFetchMultipleUrls } from '../hooks/multipleUrlsHooks';
+import { useFetchByUrl } from '../hooks/databyUrlHooks';
+import { useShipDetails } from '../hooks/shipHooks';
 
 function ShipDetails() {
   const { shipId } = useParams<{ shipId?: string }>();

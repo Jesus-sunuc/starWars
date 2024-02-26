@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useShips } from '../hooks/swapiHooks';
+import { useShips } from '../hooks/pagesHooks.ts';
 
 const extractIdFromUrl = (url: string): string | null => {
   const idPattern = /\/(\d+)\/$/; // Regex to match the ID at the end of the URL
@@ -36,7 +36,7 @@ const ShipList = () => {
       </nav>
       <ul className='paddingLeft'>
         {filteredShips?.map((ship) => {
-          const shipId = extractIdFromUrl(ship.url); // Extract the ID from the ship's URL
+          const shipId = extractIdFromUrl(ship.url);
           return (
             <li key={shipId}><Link to={`/starships/${shipId}/`}>{ship.name}</Link></li>
           );
