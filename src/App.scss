@@ -4,11 +4,10 @@
 }
 
 body {
-  height: 100vh;
+  height: 100%;
   color: #F1FADA;
   display: flex;
   justify-content: center;
-  align-items: center;
   font-family: 'Orbitron';
   background-color: #000;
 
@@ -29,17 +28,17 @@ p {
   color: #00d66b;
 
   strong {
-    font-size: 16px;
+    font-size: 14px;
     color: #F1FADA;
   }
 
   @media screen and (min-width: 576px) {
     strong {
-      font-size: 18px;
+      font-size: 16px;
     }
 
     p {
-      font-size: 18px;
+      font-size: 16px;
     }
   }
 }
@@ -61,12 +60,12 @@ p {
 
 .space {
   text-align: center;
-  font-size: 30px;
-  margin-bottom: 20px;
+  font-size: 20px;
+  margin: 40px 0 20px 0;
 }
 
 h1 {
-  margin-bottom: 30px;
+  margin: 60px 0 30px 0;
   text-align: center;
   color: #F1FADA;
 }
