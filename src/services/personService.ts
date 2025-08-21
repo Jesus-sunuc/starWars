@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const fetchPersonId = async (id: string) => {
-  const response = await axios.get(`https://swapi.dev/api/people/${id}`);
+  const response = await axios.get(`https://swapi.tech/api/people/${id}`);
   return response.data;
-}
+};
