@@ -1,30 +1,86 @@
-# React + TypeScript + Vite
+# Star Wars Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A modern web application to explore Star Wars characters and starships, built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
+Star Wars Explorer is an interactive web app that allows users to browse and view details about people and starships from the Star Wars universe. The project demonstrates modern frontend development practices, including custom hooks, modular services, and responsive design. It is designed for Star Wars fans and developers interested in learning best practices for React and TypeScript projects.
 
-## Expanding the ESLint configuration
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Credits](#credits)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
+- Browse lists of Star Wars characters and starships
+- View detailed information for each character and ship
+- Fast, responsive UI with modern styling
+- Modular codebase with custom hooks and services
+- Font and image assets for enhanced presentation
 
-- Configure the top-level `parserOptions` property like this:
+## Tech Stack
+- **React** (with hooks)
+- **TypeScript**
+- **Vite**
+- **SCSS** for styling
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher recommended)
+- npm or yarn
+
+### Installation
+```bash
+# Clone the repository
+$ git clone https://github.com/Jesus-sunuc/starWars.git
+$ cd starWars
+
+# Install dependencies
+$ npm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Running the App
+```bash
+# Start the development server
+$ npm run dev
+```
+
+The app will be available at `http://localhost:5173` (or as indicated in your terminal).
+
+## Usage
+- Navigate to the People or Ships section to explore Star Wars data.
+- Click on a character or ship to view detailed information.
+
+## Project Structure
+```
+starWars/
+├── src/
+│   ├── hooks/         # Custom React hooks for data fetching
+│   ├── pages/         # Page components for lists and details
+│   ├── services/      # API service modules
+│   ├── types/         # TypeScript type definitions
+│   ├── img/           # Image assets
+│   ├── fonts/         # Font assets
+│   ├── App.tsx        # Main app component
+│   └── main.tsx       # App entry point
+├── public/            # Static files
+├── package.json       # Project metadata and scripts
+├── tsconfig.json      # TypeScript configuration
+├── vite.config.ts     # Vite configuration
+└── README.md          # Project documentation
+```
+
+## Credits
+- [Star Wars API (SWAPI)](https://swapi.dev/) for data
+- [Orbitron Font](https://fonts.google.com/specimen/Orbitron) for typography
+- Project by [Jesus-sunuc](https://github.com/Jesus-sunuc)
+
+---
+
+For questions or feedback, please open an issue or contact the maintainer.
